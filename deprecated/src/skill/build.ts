@@ -12,6 +12,8 @@ import {
   finalResponseBlock,
   patternsBlock,
   whenToAskBlock,
+  reactTailwindStackBlock,
+  codeOutputFormatBlock,
 } from "./blocks";
 
 function yamlQuote(value: string): string {
@@ -37,6 +39,8 @@ export function buildSkillMarkdown(): string {
     stackDefaultsBlock,
     workflowBlock,
     uiQualityBlock,
+    reactTailwindStackBlock,
+    codeOutputFormatBlock,
     dataApiBlock,
     safetyBlock,
     finalResponseBlock,
