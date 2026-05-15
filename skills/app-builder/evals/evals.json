@@ -1,0 +1,23 @@
+{
+  "skill_name": "web-app-builder",
+  "evals": [
+    {
+      "id": 1,
+      "prompt": "Build me a small web app for tracking freelance invoices. I want to add clients, enter invoice amount/status, and see totals for paid vs unpaid. Use whatever frontend stack makes sense and give me a preview link.",
+      "expected_output": "Creates a working web app project with sensible stack selection, invoice/client UI, stateful interactions or local storage, build verification, and a live preview link.",
+      "files": []
+    },
+    {
+      "id": 2,
+      "prompt": "I already have a Vite React app in /agent/acme-dashboard. Add a responsive analytics dashboard page with cards, a filter, and a table. Don't rewrite the whole app.",
+      "expected_output": "Inspects existing project, preserves structure, adds dashboard components/styles, runs relevant verification, and summarizes changed files.",
+      "files": []
+    },
+    {
+      "id": 3,
+      "prompt": "做一个简单的网页应用：番茄钟 + 待办事项，能开始/暂停计时，任务可以勾选完成。要能在浏览器里打开。",
+      "expected_output": "Builds a browser-previewable pomodoro/todo app, likely static or Vite depending on complexity, with start/pause timer and task completion interactions.",
+      "files": []
+    }
+  ]
+}
