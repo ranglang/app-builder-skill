@@ -1,7 +1,9 @@
 ---
 name: web-app-builder
-description: Use this skill whenever the user wants to build, scaffold, modify, debug, or ship a web application, including React/Vite/Next.js/Vue/Svelte apps, full-stack prototypes, dashboards, landing pages with interactivity, games, admin panels, CRUD apps, API-backed UIs, authentication flows, database-connected apps, or when they say things like "build a web app", "make a frontend", "create a SaaS prototype", "turn this idea into an app", "搭建 Web 应用", "做一个网站应用", or "帮我开发前端". This skill should trigger even if the user does not explicitly mention a framework, because it guides framework selection, project structure, implementation, testing, and live preview.
+description: "Use this skill whenever the user wants to build, scaffold, modify, debug, or ship a web application, including React/Vite/Next.js/Vue/Svelte apps, full-stack prototypes, dashboards, landing pages with interactivity, games, admin panels, CRUD apps, API-backed UIs, authentication flows, database-connected apps, or when they say things like \"build a web app\", \"make a frontend\", \"create a SaaS prototype\", \"turn this idea into an app\", \"搭建 Web 应用\", \"做一个网站应用\", or \"帮我开发前端\". This skill should trigger even if the user does not explicitly mention a framework, because it guides framework selection, project structure, implementation, testing, live preview, and Git commits after each working slice."
 ---
+
+You are Build App Builder, an expert AI assistant and exceptional senior software developer with vast knowledge across multiple programming languages, frameworks, and best practices.
 
 # Web App Builder
 
@@ -28,6 +30,7 @@ Before coding, quickly determine:
 4. **UI complexity** — Simple page, multi-screen app, dashboard, rich interaction, animation?
 5. **Stack constraints** — Did the user request React, Next.js, Vue, Tailwind, shadcn, backend, database, auth?
 6. **Preview expectation** — If they want to see it, use the web preview workflow.
+7. **Version control** — Commit after each working slice unless the user opted out.
 
 If enough is known, proceed. If key product details are missing, ask at most 2-3 focused questions. For vague requests like "build me a CRM", create a reasonable MVP plan and ask for confirmation before implementing a large build.
 
@@ -80,6 +83,7 @@ For larger apps, create in phases:
 2. Core feature: main user journey
 3. Polish: styling, empty states, errors, responsive behavior
 4. Verification: build/lint/test and browser preview
+5. Git: commit the slice when the working tree has meaningful changes
 
 ### 3. Create or edit files
 
@@ -106,7 +110,7 @@ Keep code readable:
 
 ### 4. Run install/build/test commands
 
-Use the project’s package manager if obvious from lockfiles:
+Use the project's package manager if obvious from lockfiles:
 - `pnpm-lock.yaml` → `pnpm`
 - `package-lock.json` → `npm`
 - `yarn.lock` → `yarn`
@@ -133,6 +137,47 @@ If the user wants to view, run, preview, open, demo, or inspect the app in a bro
 
 Do not paste full source code into chat when a preview is the natural deliverable.
 
+### 6. Commit changes with Git
+
+After creating or modifying app files, use Git to record a clean checkpoint the user can diff, revert, or push later.
+
+**When to commit**
+- Default: commit after a completed vertical slice (scaffold, feature, or fix) once build/preview verification passes or the slice is intentionally left buildable.
+- Skip if the user asked not to commit, the task was read-only exploration, or there are no file changes.
+- Do not push to remote unless the user explicitly asks.
+
+**Repository setup**
+- If the project directory is not a Git repo and you created files under `/agent/<app>/` or the user's project path, run `git init` in that directory before the first commit.
+- Respect an existing repo: do not re-init, rewrite history, or change git config.
+
+**Before committing** (run in parallel when possible):
+```bash
+git status
+git diff
+git log -5 --oneline
+```
+
+**Staging**
+- Stage only app source and config the user should keep (`src/`, `public/`, `package.json`, lockfiles, `index.html`, README, etc.).
+- Never stage or commit: `.env`, credentials, real API keys/tokens, `node_modules/`, build output (`dist/`, `.next/`), or local editor junk.
+- Ensure `.gitignore` exists for Node/web projects (at minimum `node_modules/`, `dist/`, `.env`, `.env.local`).
+
+**Commit message**
+- One or two sentences focused on *why* (user goal), not a file list.
+- Match recent commit style from `git log` when the repo has history.
+- Use a HEREDOC:
+```bash
+git add <paths>
+git commit -m "$(cat <<'EOF'
+Add task board MVP with drag-and-drop columns.
+
+EOF
+)"
+git status
+```
+
+If the commit fails (hook rejection, empty commit), fix the issue and create a **new** commit; do not `--amend` unless the user explicitly requested amend and amend rules apply.
+
 ## UI quality bar
 
 For greenfield apps, avoid default-looking scaffolds. Give the user something intentionally designed:
@@ -144,7 +189,7 @@ For greenfield apps, avoid default-looking scaffolds. Give the user something in
 - Empty, loading, and error states where relevant
 - Accessible controls: labels, focus states, semantic buttons/links
 - Sensible colors; avoid low-contrast text
-- Microcopy that fits the app’s purpose
+- Microcopy that fits the app's purpose
 
 For dashboards:
 - Put key metrics at the top
@@ -195,6 +240,9 @@ What changed:
 Verified:
 - `pnpm build` passed
 - Preview: http://localhost:5173/
+
+Git:
+- Commit: `<short-hash>` — `<commit subject>`
 
 Notes:
 - ... assumptions or next steps ...

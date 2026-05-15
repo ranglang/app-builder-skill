@@ -1,0 +1,16 @@
+{
+    "name": "app-builder-skill-codegen",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "build": "bun run src/main.ts",
+        "check": "bun run src/main.ts --check"
+    },
+    "dependencies": {
+        "dedent": "^1.7.2"
+    },
+    "devDependencies": {
+        "@types/bun": "latest",
+        "typescript": "^5.8.3"
+    }
+}

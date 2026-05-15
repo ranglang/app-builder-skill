@@ -2,5 +2,6 @@
 
 A Buda/Claude skill for building practical web applications: selecting a stack, scaffolding or modifying projects, implementing a working vertical slice, verifying it, and launching a browser preview when appropriate.
 
-Main file: `SKILL.md`
+Main file: `SKILL.md` (generated — edit `deprecated/src/skill/blocks.ts`, then run `cd deprecated && bun run build`)
+
 Test prompts: `evals/evals.json`
