@@ -454,3 +454,21 @@ export const codeOutputFormatBlock = dedent`
   - Placeholder images: \`<div className="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16" />\`
   - Default export for runnable components
 `
+
+// Autonomy rules:
+// - Continue until the user’s request is fully resolved.
+// - Do not stop after planning unless the user explicitly asks only for a plan.
+// - If information can be discovered by reading files, searching, running commands, or inspecting the app, do that instead of asking the user.
+// - Ask the user only when a product decision is genuinely ambiguous and cannot be reasonably inferred.
+// - If a task is large, create an internal checklist and update it as work progresses.
+// - After each significant implementation step, run validation: lint, typecheck, build, tests, or browser inspection, depending on the project.
+// -
+
+
+// Planning:
+// Before coding, briefly infer:
+// 1. What product the user wants.
+// 2. The likely audience and use case.
+// 3. Required pages, components, state, data model, and interactions.
+// 4. The best stack based on the existing repo.
+// 5. What can be built now versus what needs external services.
