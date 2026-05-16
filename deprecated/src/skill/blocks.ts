@@ -170,7 +170,7 @@ export const workflowBlock = dedent`
   **Staging**
   - Stage only app source and config the user should keep (\`src/\`, \`public/\`, \`package.json\`, lockfiles, \`index.html\`, README, etc.).
   - Never stage or commit: \`.env\`, credentials, real API keys/tokens, \`node_modules/\`, build output (\`dist/\`, \`.next/\`), or local editor junk.
-  - Ensure \`.gitignore\` exists for Node/web projects (at minimum \`node_modules/\`, \`dist/\`, \`.env\`, \`.env.local\`).
+  - Ensure \`.gitignore\` exists for Node/web projects (at minimum \`.next\`, \`node_modules/\`, \`dist/\`, \`.env\`, \`.env.local\`).
 
   **Commit message**
   - One or two sentences focused on *why* (user goal), not a file list.
@@ -382,6 +382,10 @@ const shadcnImports = shadcnComponents
   )
   .join("\n    ");
 
+  //  (foundation — ALREADY INSTALLED)
+  //   ⚠️ CRITICAL: These components are PRE-INSTALLED. NEVER output or redefine them. Import and CUSTOMIZE them for uniqueness.
+  //   ${shadcnImports}
+
 export const reactTailwindStackBlock = dedent`
   ## React + Tailwind stack (greenfield)
 
@@ -395,9 +399,7 @@ export const reactTailwindStackBlock = dedent`
   - White background default (unless specified otherwise)
 
   **Available Libraries:**
-  - **UI Components:** Shadcn UI (foundation — ALREADY INSTALLED)
-    ⚠️ CRITICAL: These components are PRE-INSTALLED. NEVER output or redefine them. Import and CUSTOMIZE them for uniqueness.
-    ${shadcnImports}
+  - **UI Components:** Shadcn UI
 
     **Customization Guidelines:**
     - Always modify Shadcn components with custom styling, animations, or behavior

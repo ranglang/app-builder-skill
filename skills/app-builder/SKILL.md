@@ -233,7 +233,7 @@ git log -5 --oneline
 **Staging**
 - Stage only app source and config the user should keep (`src/`, `public/`, `package.json`, lockfiles, `index.html`, README, etc.).
 - Never stage or commit: `.env`, credentials, real API keys/tokens, `node_modules/`, build output (`dist/`, `.next/`), or local editor junk.
-- Ensure `.gitignore` exists for Node/web projects (at minimum `node_modules/`, `dist/`, `.env`, `.env.local`).
+- Ensure `.gitignore` exists for Node/web projects (at minimum `.next`, `node_modules/`, `dist/`, `.env`, `.env.local`).
 
 **Commit message**
 - One or two sentences focused on *why* (user goal), not a file list.
@@ -293,26 +293,7 @@ When building Vite + React + TypeScript + Tailwind apps (the default for polishe
 - White background default (unless specified otherwise)
 
 **Available Libraries:**
-- **UI Components:** Shadcn UI (foundation — ALREADY INSTALLED)
-  ⚠️ CRITICAL: These components are PRE-INSTALLED. NEVER output or redefine them. Import and CUSTOMIZE them for uniqueness.
-  - Button: `import { Button } from "../components/ui/button"`
-  - Card: `import { Card } from "../components/ui/card"`
-  - Input: `import { Input } from "../components/ui/input"`
-  - Label: `import { Label } from "../components/ui/label"`
-  - Select: `import { Select } from "../components/ui/select"`
-  - Dialog: `import { Dialog } from "../components/ui/dialog"`
-  - DropdownMenu: `import { DropdownMenu } from "../components/ui/dropdown-menu"`
-  - Tabs: `import { Tabs } from "../components/ui/tabs"`
-  - Badge: `import { Badge } from "../components/ui/badge"`
-  - Avatar: `import { Avatar } from "../components/ui/avatar"`
-  - Separator: `import { Separator } from "../components/ui/separator"`
-  - Sheet: `import { Sheet } from "../components/ui/sheet"`
-  - Table: `import { Table } from "../components/ui/table"`
-  - Checkbox: `import { Checkbox } from "../components/ui/checkbox"`
-  - Textarea: `import { Textarea } from "../components/ui/textarea"`
-  - Switch: `import { Switch } from "../components/ui/switch"`
-  - Popover: `import { Popover } from "../components/ui/popover"`
-  - Accordion: `import { Accordion } from "../components/ui/accordion"`
+- **UI Components:** Shadcn UI
 
   **Customization Guidelines:**
   - Always modify Shadcn components with custom styling, animations, or behavior
@@ -466,7 +447,24 @@ cat > package.json <<'JSON'
 JSON
 ```
 
-Then create `index.html`, `src/main.tsx`, `src/App.tsx`, and CSS.
+Then create `vite.config.ts`, `index.html`, `src/main.tsx`, `src/App.tsx`, and CSS.
+
+**vite.config.ts** (always include):
+
+```ts
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    host: "0.0.0.0",
+    allowedHosts: true,
+  },
+});
+```
+
+⚠️ Make sure Vite uses `vite.config.ts` over `vite.config.js`.
 
 ### Static prototype
 
