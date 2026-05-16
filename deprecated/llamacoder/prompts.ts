@@ -177,10 +177,6 @@ export function getMainCodingPrompt() {
     },
     "env": {
       "NODE_ENV": "development"
-    },
-    "deploy": {
-      "provider": "buda-cloud",
-      "region": "auto"
     }
   }
   \`\`\`
@@ -203,10 +199,6 @@ export function getMainCodingPrompt() {
     },
     "env": {
       "NODE_ENV": "development"
-    },
-    "deploy": {
-      "provider": "buda-cloud",
-      "region": "auto"
     }
   }
   \`\`\`

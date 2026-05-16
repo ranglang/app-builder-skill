@@ -1,0 +1,114 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://buda.dev/schemas/buda.app.json",
+  "title": "Buda App Definition",
+  "description": "Declares to the Buda sandbox how to install, run dev, build, start, and optionally deploy a web app.",
+  "type": "object",
+  "required": ["name", "version", "type", "description", "framework", "port", "scripts"],
+  "additionalProperties": false,
+  "properties": {
+    "name": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_]*$",
+      "description": "Machine-friendly app identifier in snake_case."
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^\\d+\\.\\d+\\.\\d+",
+      "description": "Semantic version of the app definition."
+    },
+    "type": {
+      "type": "string",
+      "enum": ["web"],
+      "description": "App type. Currently only web is supported."
+    },
+    "description": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 200,
+      "description": "Short human-readable description of the app."
+    },
+    "framework": {
+      "type": "string",
+      "enum": ["vite", "next" ],
+      "description": "Framework identifier used by the Buda sandbox to apply framework-specific behavior."
+    },
+    "port": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 65535,
+      "description": "Dev server port number."
+    },
+    "scripts": {
+      "type": "object",
+      "required": ["install", "dev", "build", "start"],
+      "additionalProperties": false,
+      "description": "Shell commands aligned with package.json scripts.",
+      "properties": {
+        "install": {
+          "type": "string",
+          "description": "Install dependencies command (e.g. pnpm install)."
+        },
+        "dev": {
+          "type": "string",
+          "description": "Start the development server."
+        },
+        "build": {
+          "type": "string",
+          "description": "Production build command."
+        },
+        "start": {
+          "type": "string",
+          "description": "Start the production server or preview."
+        },
+        "lint": {
+          "type": "string",
+          "description": "Lint command (optional)."
+        }
+      }
+    },
+    "env": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "string"
+      },
+      "description": "Default environment variables for the app."
+    }
+  },
+  "examples": [
+    {
+      "name": "my_app",
+      "version": "1.0.0",
+      "type": "web",
+      "description": "A Next.js web application",
+      "framework": "next",
+      "port": 3000,
+      "scripts": {
+        "install": "pnpm install",
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start"
+      },
+      "env": {
+        "NODE_ENV": "development"
+      }
+    },
+    {
+      "name": "my_app",
+      "version": "1.0.0",
+      "type": "web",
+      "description": "A Vite + React application",
+      "framework": "vite",
+      "port": 5173,
+      "scripts": {
+        "install": "pnpm install",
+        "dev": "vite --host 0.0.0.0",
+        "build": "tsc -b && vite build",
+        "start": "vite preview --host 0.0.0.0"
+      },
+      "env": {
+        "NODE_ENV": "development"
+      }
+    }
+  ]
+}

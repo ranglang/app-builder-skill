@@ -50,6 +50,77 @@ Use these defaults unless the user specifies otherwise:
 
 Avoid adding databases, auth providers, payments, queues, or cloud services unless the user asks or the app genuinely needs them. For early prototypes, mock data or local storage is often better.
 
+## App definition (`buda.app.json`)
+
+When scaffolding a new web app, always initialize `buda.app.json` at the project root in the first output (alongside `package.json` and source files).
+
+**Restricted filename:** the file MUST be named exactly `buda.app.json`. Never use `app.json`, `buda-app.json`, `.buda.json`, or any other variant.
+
+**Purpose:** declare to the Buda sandbox how to install, run dev, build, start, and optionally deploy the app. Keep `scripts` aligned with `package.json`; set `port` to the dev server port; set `framework` to the real stack (`vite`, `next`, etc.).
+
+**Emit format:** use the same path-tagged fence format: ```json{path=buda.app.json}`
+
+**When to update:** update `buda.app.json` whenever `package.json` scripts, framework, port, or deploy target change.
+
+**Schema fields:**
+| Field | Type | Required | Description |
+|-------|------|----------|-------------|
+| name | string | yes | Machine-friendly app identifier (snake_case) |
+| version | string | yes | Semver version |
+| type | string | yes | App type — currently always `"web"` |
+| description | string | yes | Short human-readable description |
+| framework | string | yes | Framework identifier: `vite`, `next`, `remix`, `astro`, `nuxt`, etc. |
+| port | number | yes | Dev server port |
+| scripts.install | string | yes | Install command (e.g. `pnpm install`) |
+| scripts.dev | string | yes | Dev server command |
+| scripts.build | string | yes | Production build command |
+| scripts.start | string | yes | Production start command |
+| env | object | no | Default environment variables |
+
+**Example (Next.js):**
+
+```json{path=buda.app.json}
+{
+  "name": "my_app",
+  "version": "1.0.0",
+  "type": "web",
+  "description": "Short description of the app",
+  "framework": "next",
+  "port": 3000,
+  "scripts": {
+    "install": "pnpm install",
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start"
+  },
+  "env": {
+    "NODE_ENV": "development"
+  }
+}
+```
+
+**Example (Vite + React):** use `port` 5173 unless configured otherwise; dev script should use `0.0.0.0` when remote preview is expected:
+
+```json{path=buda.app.json}
+{
+  "name": "my_app",
+  "version": "1.0.0",
+  "type": "web",
+  "description": "Short description of the app",
+  "framework": "vite",
+  "port": 5173,
+  "scripts": {
+    "install": "pnpm install",
+    "dev": "vite --host 0.0.0.0",
+    "build": "tsc -b && vite build",
+    "start": "vite preview --host 0.0.0.0"
+  },
+  "env": {
+    "NODE_ENV": "development"
+  }
+}
+```
+
 ## Implementation workflow
 
 ### 1. Inspect before changing
