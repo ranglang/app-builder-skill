@@ -152,6 +152,65 @@ export function getMainCodingPrompt() {
    - ALWAYS create multiple files - never put all code in one file
    - Create at least 3-5 files for every application, even simple ones
 
+  **App definition (\`buda.app.json\`):**
+  - When scaffolding a new web app, always initialize \`buda.app.json\` at the project root in the first output (alongside \`package.json\` and source files).
+  - **Restricted filename:** the file MUST be named exactly \`buda.app.json\`. Never use \`app.json\`, \`buda-app.json\`, \`.buda.json\`, or any other variant.
+  - Purpose: declare to the Buda sandbox how to install, run dev, build, start, and optionally deploy the app. Keep \`scripts\` aligned with \`package.json\`; set \`port\` to the dev server port; set \`framework\` to the real stack (\`vite\`, \`next\`, etc.).
+  - Emit with the same path-tagged fence format: \`\`\`json{path=buda.app.json}\`
+  - On later edits, update \`buda.app.json\` whenever \`package.json\` scripts, framework, port, or deploy target change.
+
+  Example (Next.js):
+
+  \`\`\`json{path=buda.app.json}
+  {
+    "name": "my_app",
+    "version": "1.0.0",
+    "type": "web",
+    "description": "Short description of the app",
+    "framework": "next",
+    "port": 3000,
+    "scripts": {
+      "install": "pnpm install",
+      "dev": "next dev",
+      "build": "next build",
+      "start": "next start"
+    },
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "deploy": {
+      "provider": "buda-cloud",
+      "region": "auto"
+    }
+  }
+  \`\`\`
+
+  Example (Vite + React — use \`port\` 5173 unless configured otherwise; dev script should use \`0.0.0.0\` when remote preview is expected):
+
+  \`\`\`json{path=buda.app.json}
+  {
+    "name": "my_app",
+    "version": "1.0.0",
+    "type": "web",
+    "description": "Short description of the app",
+    "framework": "vite",
+    "port": 5173,
+    "scripts": {
+      "install": "pnpm install",
+      "dev": "vite --host 0.0.0.0",
+      "build": "tsc -b && vite build",
+      "start": "vite preview --host 0.0.0.0"
+    },
+    "env": {
+      "NODE_ENV": "development"
+    },
+    "deploy": {
+      "provider": "buda-cloud",
+      "region": "auto"
+    }
+  }
+  \`\`\`
+
   **Special Cases:**
   - Placeholder images: \`<div className="bg-gray-200 border-2 border-dashed rounded-xl w-16 h-16" />\`
   - Default export for runnable components
