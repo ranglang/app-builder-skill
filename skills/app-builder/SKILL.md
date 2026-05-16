@@ -397,6 +397,33 @@ JSON
 
 Then create `index.html`, `src/main.tsx`, `src/App.tsx`, and CSS.
 
+### Complex projects: scaffold with `pnpm create vite`
+
+
+```bash
+pnpm create vite@latest my-app -- --template react-ts
+cd my-app
+pnpm install
+```
+
+After scaffolding, set the dev server to listen on all interfaces and allow non-localhost hostnames (needed for remote previews, tunnels, and some IDE preview integrations). In `vite.config.ts` (or `vite.config.js`):
+
+```ts
+// https://vite.dev/config/
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+export default defineConfig({
+  plugins: [react()],
+  server: {
+    host: '0.0.0.0',
+    allowedHosts: true,
+  },
+})
+```
+
+Keep `pnpm dev` / preview aligned with this (either rely on the config above or pass `--host 0.0.0.0` if the project overrides scripts).
+
 ### Static prototype
 
 Use when the app can be a standalone page:
