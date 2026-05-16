@@ -310,7 +310,24 @@ export const patternsBlock = dedent`
   JSON
   \`\`\`
 
-  Then create \`index.html\`, \`src/main.tsx\`, \`src/App.tsx\`, and CSS.
+  Then create \`vite.config.ts\`, \`index.html\`, \`src/main.tsx\`, \`src/App.tsx\`, and CSS.
+
+  **vite.config.ts** (always include):
+
+  \`\`\`ts
+  import { defineConfig } from "vite";
+  import react from "@vitejs/plugin-react";
+
+  export default defineConfig({
+    plugins: [react()],
+    server: {
+      host: "0.0.0.0",
+      allowedHosts: true,
+    },
+  });
+  \`\`\`
+
+  ⚠️ Make sure Vite uses \`vite.config.ts\` over \`vite.config.js\`.
 
   ### Static prototype
 
